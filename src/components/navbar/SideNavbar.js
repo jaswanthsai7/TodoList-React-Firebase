@@ -1,8 +1,17 @@
-import React from "react";
+import React, { useReducer } from "react";
 import "./SideNavbar.css";
 import $ from "jquery";
-
+import AddToList from "../todolist/AddToList";
+const handler = (state, action) => {
+  if (action.type == "ADD_TODO") {
+    return { showData: !state.showData };
+  }
+};
 export default function SideNavbar() {
+  const [state, dispatch] = useReducer(handler, { showData: false });
+
+ 
+
   function clickHandler() {
     $(function () {
       // Sidebar toggle behavior
@@ -39,10 +48,15 @@ export default function SideNavbar() {
               Home
             </a>
           </li>
-          <li className="nav-item">
+          <li
+            className="nav-item"
+            onClick={() => {
+              dispatch({ type: "ADD_TODO" });
+            }}
+          >
             <a href="#" className="nav-link text-dark font-italic">
               <i className="fa fa-address-card mr-3 text-primary fa-fw" />
-              About
+              Add TODO
             </a>
           </li>
           <li className="nav-item">
@@ -115,6 +129,8 @@ export default function SideNavbar() {
             <u>Bootstrapious</u>
           </a>
         </p>
+        {state.showData && <AddToList />}
+
         <div className="separator" />
         <div className="row text-white">
           <div className="col-lg-7">
