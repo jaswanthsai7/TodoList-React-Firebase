@@ -1,16 +1,26 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useState } from "react";
 import "./SideNavbar.css";
 import $ from "jquery";
 import AddToList from "../todolist/AddToList";
+import BackModal from "../modal/BackModal";
+import TodoList from "../todolist/TodoList";
 const handler = (state, action) => {
   if (action.type == "ADD_TODO") {
-    return { showData: !state.showData };
+    return { showForm: !state.showForm };
   }
 };
-export default function SideNavbar() {
-  const [state, dispatch] = useReducer(handler, { showData: false });
-
- 
+export default function SideNavbar(props) {
+  const [state, dispatch] = useReducer(handler, { showForm: false });
+  const [list, setList] = useState([]);
+  function closeForm() {
+    dispatch({ type: "ADD_TODO" });
+  }
+  function addToList(data) {
+    setList((prev) => {
+      return [...prev, data];
+    });
+    dispatch({ type: "ADD_TODO" })
+  }
 
   function clickHandler() {
     $(function () {
@@ -48,12 +58,7 @@ export default function SideNavbar() {
               Home
             </a>
           </li>
-          <li
-            className="nav-item"
-            onClick={() => {
-              dispatch({ type: "ADD_TODO" });
-            }}
-          >
+          <li className="nav-item" onClick={closeForm}>
             <a href="#" className="nav-link text-dark font-italic">
               <i className="fa fa-address-card mr-3 text-primary fa-fw" />
               Add TODO
@@ -118,104 +123,15 @@ export default function SideNavbar() {
           <small className="text-uppercase font-weight-bold">Toggle</small>
         </button>
         {/* Demo content */}
-        <h2 className="display-4 text-white">Bootstrap vertical nav</h2>
-        <p className="lead text-white mb-0">
-          Build a fixed sidebar using Bootstrap 4 vertical navigation and media
-          objects.
-        </p>
-        <p className="lead text-white">
-          Snippet by{" "}
-          <a href="https://bootstrapious.com/snippets" className="text-white">
-            <u>Bootstrapious</u>
-          </a>
-        </p>
-        {state.showData && <AddToList />}
+        <h2 className="display-4 text-white">List</h2>
 
-        <div className="separator" />
-        <div className="row text-white">
-          <div className="col-lg-7">
-            <p className="lead">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
-            <p className="lead">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor.
-            </p>
-            <div className="bg-white p-5 rounded my-5 shadow-sm">
-              <p className="lead font-italic mb-0 text-muted">
-                "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
-                do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-                dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                proident, sunt in culpa qui officia deserunt mollit anim id est
-                laborum."
-              </p>
-            </div>
-            <p className="lead">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor.
-            </p>
-            <p className="lead">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
-            <p className="lead">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor.
-            </p>
-          </div>
-          <div className="col-lg-5">
-            <p className="lead">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
-            <p className="lead">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor.
-            </p>
-            <p className="lead">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
-            <p className="lead">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor.
-            </p>
-          </div>
-        </div>
+        {state.showForm && (
+          <BackModal>
+            <AddToList closeForm={closeForm} addToList={addToList} />
+          </BackModal>
+        )}
+
+        <TodoList todoList={list} />
       </div>
     </>
   );

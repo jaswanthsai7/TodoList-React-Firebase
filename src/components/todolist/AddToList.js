@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import classes from "./AddToList.module.css";
 
-export default function AddToList() {
+export default function AddToList(props) {
   const [text, setText] = useState("");
   const [date, setDate] = useState();
   const [priority, setPriority] = useState("");
@@ -26,6 +26,12 @@ export default function AddToList() {
       author: "",
       priority: priority,
     };
+    console.log(data);
+    props.addToList(data)
+  };
+
+  const closeForm = () => {
+    props.closeForm();
   };
 
   return (
@@ -43,12 +49,12 @@ export default function AddToList() {
         <label htmlFor="priority">Priority</label>
 
         <select
-          class="custom-select "
+          className="custom-select "
           id="priority"
           required
           onChange={priorityChangeHandler}
         >
-          <option selected>Choose...</option>
+          <option>Choose...</option>
           <option value="High">High</option>
           <option value="Medium">Medium</option>
           <option value="Low">Low</option>
@@ -56,7 +62,9 @@ export default function AddToList() {
       </p>
 
       <p className={classes.actions}>
-        <button type="button">Cancel</button>
+        <button type="button" onClick={closeForm}>
+          Cancel
+        </button>
         <button type="submit">Submit</button>
       </p>
     </form>
