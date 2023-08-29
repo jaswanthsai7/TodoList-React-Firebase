@@ -13,6 +13,7 @@
     position: fixed;
     top: 0;
     left: 0;
+    z-index: 2;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
     transition: all 0.4s;
     z-index: 1;
@@ -74,6 +75,7 @@ position: static;
   .separator {
     margin: 3rem 0;
     border-bottom: 1px dashed #fff;
+    z-index: 0;
   }
   
   .text-uppercase {

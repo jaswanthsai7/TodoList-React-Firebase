@@ -1,16 +1,15 @@
 import React from "react";
 import "./SideNavbar.css";
-import $ from 'jquery'
+import $ from "jquery";
 
 export default function SideNavbar() {
-  function clickHandler(){
+  function clickHandler() {
     $(function () {
       // Sidebar toggle behavior
       $("#sidebarCollapse").on("click", function () {
         $("#sidebar, #content").toggleClass("active");
       });
     });
-   
   }
   return (
     <>
@@ -92,7 +91,9 @@ export default function SideNavbar() {
       {/* End vertical navbar */}
       {/* Page content holder */}
       <div className="page-content p-5" id="content">
-        {/* Toggle button */}<br/><br/>
+        {/* Toggle button */}
+        <br />
+        <br />
         <button
           id="sidebarCollapse"
           type="button"
