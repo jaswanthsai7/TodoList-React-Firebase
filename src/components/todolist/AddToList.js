@@ -27,14 +27,13 @@ export default function AddToList(props) {
       priority: priority,
     };
     console.log(data);
-    props.addToList(data)
+    props.addToList(data);
   };
 
   const closeForm = () => {
     props.closeForm();
   };
- 
-  
+
   return (
     <form className={classes.form} onSubmit={submitHandler}>
       <p>

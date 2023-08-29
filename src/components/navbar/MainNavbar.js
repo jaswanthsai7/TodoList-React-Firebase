@@ -1,12 +1,16 @@
 import React from "react";
 import "./MainNavbar.css";
 import { UserAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function MainNavbar() {
   const { logout } = UserAuth();
-  function logOut() {
-    logout();
-  }
+  const navigate = useNavigate();
+  const logOut = async () => {
+    await logout();
+    navigate("/");
+  };
+  
   return (
     <header className="main-header">
       <div className="container">
@@ -37,14 +41,11 @@ export default function MainNavbar() {
               <li>
                 <a href="#about">about us</a>
               </li>
-
               <li>
                 <a href="#contact">contact</a>
               </li>
               <li>
-                <a href="/" onClick={logOut}>
-                  Logout
-                </a>
+                <a onClick={logOut}>Logout</a>
               </li>
             </ul>
           </div>

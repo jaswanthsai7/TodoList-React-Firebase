@@ -1,11 +1,9 @@
 import React from "react";
 
 export default function TodoList(props) {
-
-  
   return (
     <div className="row">
-      {props.todoList.map((post,i) => (
+      {props.todoList.map((post, i) => (
         <div key={i}>
           <div className="row text-white m-2">
             <div className="col-lg-12">
@@ -59,15 +57,18 @@ export default function TodoList(props) {
                     </div>
                   </>
                 )}
-                
-                <button className="btn btn-danger p-1 mt-2" onClick={()=>{
-                  const id=post.id;
-                  props.deletePost(id)
 
-                }}>Delete</button>
+                <button
+                  className="btn btn-danger p-1 mt-2"
+                  onClick={() => {
+                    const id = post.id;
+                    props.deletePost(id);
+                  }}
+                >
+                  Delete
+                </button>
               </div>
             </div>
-            
           </div>
         </div>
       ))}

@@ -22,7 +22,9 @@ export default function Login() {
 
   return (
     <div className={classes.form}>
-        <label style={{color:"blue"}} className="col-md-9 text-md-end">Signin</label>
+      <label style={{ color: "blue" }} className="col-md-9 text-md-end">
+        Signin
+      </label>
       <form onSubmit={subHandler}>
         <p>
           <label htmlFor="exampleInputEmail1" className="form-label">

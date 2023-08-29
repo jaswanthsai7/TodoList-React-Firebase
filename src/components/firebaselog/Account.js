@@ -8,14 +8,14 @@ export default function Account() {
   const { user, logout } = UserAuth();
   const navigate = useNavigate();
 
-  const logOutHandler = async () => {
-    try {
-      await logout();
-      navigate("/");
-    } catch (e) {
-      console.log(e.message);
-    }
-  };
+  // const logOutHandler = async () => {
+  //   try {
+  //     await logout();
+  //     navigate("/");
+  //   } catch (e) {
+  //     console.log(e.message);
+  //   }
+  // };
 
   return (
     <div>

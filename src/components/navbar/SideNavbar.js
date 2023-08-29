@@ -4,7 +4,6 @@ import $, { data, error } from "jquery";
 import AddToList from "../todolist/AddToList";
 import BackModal from "../modal/BackModal";
 import TodoList from "../todolist/TodoList";
-import { json } from "react-router-dom";
 import { UserAuth } from "../../context/AuthContext";
 const handler = (state, action) => {
   if (action.type == "ADD_TODO") {
@@ -16,6 +15,7 @@ export default function SideNavbar(props) {
   const { user } = UserAuth();
   const [state, dispatch] = useReducer(handler, { showForm: false });
   const [list, setList] = useState([]);
+  const [service, setService] = useState(false);
 
   const enco = user.email;
   const withoutDotCom = enco.replace(/\.com$/, "");
@@ -48,37 +48,33 @@ export default function SideNavbar(props) {
   }, []);
 
   const sortList = (event) => {
-    if(event.target.value==="High"){
+    if (event.target.value === "High") {
       const priorityValues = {
         Low: 3,
         Medium: 2,
         High: 1,
       };
-  
-      
-        const data = [...list];
-        data.sort(
-          (a, b) => priorityValues[a.priority] - priorityValues[b.priority]
-        );
-        console.log(data)
-        setList(data)
-        
-    }else if(event.target.value==='Low'){
+
+      const data = [...list];
+      data.sort(
+        (a, b) => priorityValues[a.priority] - priorityValues[b.priority]
+      );
+      console.log(data);
+      setList(data);
+    } else if (event.target.value === "Low") {
       const priorityValues = {
         Low: 1,
         Medium: 2,
         High: 3,
       };
-  
-      
-        const data = [...list];
-        data.sort(
-          (a, b) => priorityValues[a.priority] - priorityValues[b.priority]
-        );
-        console.log(data)
-        setList(data)
+
+      const data = [...list];
+      data.sort(
+        (a, b) => priorityValues[a.priority] - priorityValues[b.priority]
+      );
+      console.log(data);
+      setList(data);
     }
-   
   };
 
   const initialLoad = useCallback(() => {
@@ -113,6 +109,14 @@ export default function SideNavbar(props) {
     initialLoad();
   }
 
+  const changeService = () => {
+    if(service===false){
+      setService(true)
+    }else if(service===true){
+      setService(false)
+    }
+  };
+
   function clickHandler() {
     $(function () {
       // Sidebar toggle behavior
@@ -144,30 +148,30 @@ export default function SideNavbar(props) {
           Main
         </p>
         <ul className="nav flex-column bg-white mb-0">
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <a href="#" className="nav-link text-dark font-italic bg-light">
               <i className="fa fa-th-large mr-3 text-primary fa-fw" />
               Home
             </a>
-          </li>
+          </li> */}
           <li className="nav-item" onClick={closeForm}>
             <a href="#" className="nav-link text-dark font-italic">
               <i className="fa fa-address-card mr-3 text-primary fa-fw" />
               Add TODO
             </a>
           </li>
-          <li className="nav-item">
+          <li className="nav-item" onClick={changeService}>
             <a href="#" className="nav-link text-dark font-italic">
               <i className="fa fa-cubes mr-3 text-primary fa-fw" />
               Services
             </a>
           </li>
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <a href="#" className="nav-link text-dark font-italic">
               <i className="fa fa-picture-o mr-3 text-primary fa-fw" />
               Gallery
             </a>
-          </li>
+          </li> */}
         </ul>
         <p className="text-gray font-weight-bold text-uppercase px-3 small py-4 mb-0">
           Charts
@@ -215,25 +219,32 @@ export default function SideNavbar(props) {
           <small className="text-uppercase font-weight-bold">Toggle</small>
         </button>
         {/* Demo content */}
-        <h2 className="display-4 text-white">List</h2>
-        
-        <select
-          className="custom-select col-md-3 "
-          id="priority"
-          required
-         
-          onChange={sortList}
-        > <option value="Sort" disabled>Sort....</option>
-          <option value="High">High to Low</option>
-          <option value="Low">Low to High</option>
-        </select>
-        {state.showForm && (
-          <BackModal>
-            <AddToList closeForm={closeForm} addToList={addToList} />
-          </BackModal>
-        )}
+        {service && <div>lorem ipsum</div>}
+        {!service && (
+          <>
+            <h2 className="display-4 text-white">List</h2>
 
-        <TodoList todoList={list} deletePost={deletePost} />
+            <select
+              className="custom-select col-md-3 "
+              id="priority"
+              required
+              onChange={sortList}
+            >
+              <option value="Sort" disabled>
+                Sort....
+              </option>
+              <option value="High">High to Low</option>
+              <option value="Low">Low to High</option>
+            </select>
+            {state.showForm && (
+              <BackModal>
+                <AddToList closeForm={closeForm} addToList={addToList} />
+              </BackModal>
+            )}
+
+            <TodoList todoList={list} deletePost={deletePost} />
+          </>
+        )}
       </div>
     </>
   );
