@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserAuth } from "../../context/AuthContext";
+import classes from "./Login.module.css";
+
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,9 +21,10 @@ export default function Login() {
   };
 
   return (
-    <div>
+    <div className={classes.form}>
+        <label style={{color:"blue"}} className="col-md-9 text-md-end">Signin</label>
       <form onSubmit={subHandler}>
-        <div className="col-sm-2">
+        <p>
           <label htmlFor="exampleInputEmail1" className="form-label">
             Email address
           </label>
@@ -37,8 +40,8 @@ export default function Login() {
           {/* <div id="emailHelp" className="form-text">
               We'll never share your email with anyone else.
             </div> */}
-        </div>
-        <div className="col-sm-2">
+        </p>
+        <p>
           <label htmlFor="exampleInputPassword1" className="form-label">
             Password
           </label>
@@ -50,22 +53,12 @@ export default function Login() {
               setPassword(e.target.value);
             }}
           />
-        </div>
-        <div className="col-sm-2 form-check">
-          <input
-            type="checkbox"
-            className="form-check-input"
-            id="exampleCheck1"
-          />
-          <label className="form-check-label" htmlFor="exampleCheck1">
-            Check me out
-          </label>
-        </div>
-        <div className="col-sm-2">
+        </p>
+        <p className={classes.actions}>
           <button type="submit" className=" btn btn-primary bg-primary">
             Signin
           </button>
-        </div>
+        </p>
       </form>
     </div>
   );

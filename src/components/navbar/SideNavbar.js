@@ -4,24 +4,39 @@ import $ from "jquery";
 import AddToList from "../todolist/AddToList";
 import BackModal from "../modal/BackModal";
 import TodoList from "../todolist/TodoList";
-
-
+import { json } from "react-router-dom";
+import { UserAuth } from "../../context/AuthContext";
 const handler = (state, action) => {
   if (action.type == "ADD_TODO") {
     return { showForm: !state.showForm };
   }
 };
+
 export default function SideNavbar(props) {
+  const { user } = UserAuth();
   const [state, dispatch] = useReducer(handler, { showForm: false });
   const [list, setList] = useState([]);
   function closeForm() {
     dispatch({ type: "ADD_TODO" });
   }
-  function addToList(data) {
+  async function addToList(data) {
+    const enco = user.email;
+    const withoutDotCom = enco.replace(/\.com$/, "");
+    await fetch(
+      `https://todolist-auth-39f0d-default-rtdb.firebaseio.com/${withoutDotCom}.json`,
+      {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    ).catch((error) => console.log(error));
+
     setList((prev) => {
       return [...prev, data];
     });
-    dispatch({ type: "ADD_TODO" })
+    dispatch({ type: "ADD_TODO" });
   }
 
   function clickHandler() {

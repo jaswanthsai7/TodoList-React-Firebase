@@ -1,0 +1,61 @@
+.form {
+    background: #599fd9;
+    background: -webkit-linear-gradient(to right, #599fd9, #c2e59c);
+    background: linear-gradient(to right, #599fd9, #c2e59c);
+    padding: 1rem;
+    width: 20rem;
+    border-radius: 10px;
+    margin: 1rem auto;
+    margin-top: 50px;
+    /* border-radius: 6px; */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    /* } */
+}
+
+.form label {
+    display: block;
+    margin-bottom: 0.05rem;
+    color: #eadbfb;
+    font-weight: bold;
+}
+
+.form input,
+.form select,
+.form textarea {
+    display: block;
+    width: 100%;
+    font: inherit;
+    padding: 0.5rem;
+    border-radius: 6px;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.856);
+    color: #28262c;
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+.actions button {
+    cursor: pointer;
+    font: inherit;
+    padding: 0.5rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    background-color: #34036c;
+    color: #e5d5f7;
+}
+
+.actions button:hover {
+    background-color: #23014a;
+}
+
+.actions button[type='button'] {
+    background-color: transparent;
+}
+
+.actions button[type='button']:hover {
+    color: #d1bee6;
+}
