@@ -4,6 +4,8 @@ import $ from "jquery";
 import AddToList from "../todolist/AddToList";
 import BackModal from "../modal/BackModal";
 import TodoList from "../todolist/TodoList";
+
+
 const handler = (state, action) => {
   if (action.type == "ADD_TODO") {
     return { showForm: !state.showForm };
