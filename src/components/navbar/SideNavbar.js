@@ -1,6 +1,6 @@
-import React, { useReducer, useState } from "react";
+import React, { useCallback, useEffect, useReducer, useState } from "react";
 import "./SideNavbar.css";
-import $ from "jquery";
+import $, { data, error } from "jquery";
 import AddToList from "../todolist/AddToList";
 import BackModal from "../modal/BackModal";
 import TodoList from "../todolist/TodoList";
@@ -16,12 +16,15 @@ export default function SideNavbar(props) {
   const { user } = UserAuth();
   const [state, dispatch] = useReducer(handler, { showForm: false });
   const [list, setList] = useState([]);
+
+  const enco = user.email;
+  const withoutDotCom = enco.replace(/\.com$/, "");
+
   function closeForm() {
     dispatch({ type: "ADD_TODO" });
   }
+
   async function addToList(data) {
-    const enco = user.email;
-    const withoutDotCom = enco.replace(/\.com$/, "");
     await fetch(
       `https://todolist-auth-39f0d-default-rtdb.firebaseio.com/${withoutDotCom}.json`,
       {
@@ -39,6 +42,77 @@ export default function SideNavbar(props) {
     dispatch({ type: "ADD_TODO" });
   }
 
+  useEffect(() => {
+    initialLoad();
+    console.log(1);
+  }, []);
+
+  const sortList = (event) => {
+    if(event.target.value==="High"){
+      const priorityValues = {
+        Low: 3,
+        Medium: 2,
+        High: 1,
+      };
+  
+      
+        const data = [...list];
+        data.sort(
+          (a, b) => priorityValues[a.priority] - priorityValues[b.priority]
+        );
+        console.log(data)
+        setList(data)
+        
+    }else if(event.target.value==='Low'){
+      const priorityValues = {
+        Low: 1,
+        Medium: 2,
+        High: 3,
+      };
+  
+      
+        const data = [...list];
+        data.sort(
+          (a, b) => priorityValues[a.priority] - priorityValues[b.priority]
+        );
+        console.log(data)
+        setList(data)
+    }
+   
+  };
+
+  const initialLoad = useCallback(() => {
+    fetch(
+      `https://todolist-auth-39f0d-default-rtdb.firebaseio.com/${withoutDotCom}.json`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        // setList((prev) => {
+        //   return [prev, ...data];
+        // });
+        const dataLoad = Object.keys(data).map((key) => {
+          return { id: key, ...data[key] };
+        });
+        // for (const key in data) {
+        //   dataLoad.push({
+        //     author: data[key].author,
+        //     date: data[key].date,
+        //     text: data[key].text,
+        //     priority: data[key].priority,
+        //   });
+        // }
+        setList(dataLoad);
+      });
+  });
+
+  async function deletePost(id) {
+    await fetch(
+      `https://todolist-auth-39f0d-default-rtdb.firebaseio.com/${withoutDotCom}/${id}.json`,
+      { method: "DELETE" }
+    ).catch((error) => console.log(error));
+    initialLoad();
+  }
+
   function clickHandler() {
     $(function () {
       // Sidebar toggle behavior
@@ -47,6 +121,7 @@ export default function SideNavbar(props) {
       });
     });
   }
+
   return (
     <>
       {/* Vertical navbar */}
@@ -54,14 +129,14 @@ export default function SideNavbar(props) {
         <div className="py-4 px-3 mb-4 bg-light">
           <div className="media d-flex align-items-center">
             <img
-              src="https://bootstrapious.com/i/snippets/sn-v-nav/avatar.png"
+              src="https://www.kindpng.com/picc/m/495-4952535_create-digital-profile-icon-blue-user-profile-icon.png"
               alt="..."
               width={65}
               className="mr-3 rounded-circle img-thumbnail shadow-sm"
             />
             <div className="media-body">
-              <h4 className="m-0">Jason Doe</h4>
-              <p className="font-weight-light text-muted mb-0">Web developer</p>
+              <h4 className="m-0">{user.email}</h4>
+              <p className="font-weight-light text-muted mb-0">Welcome!</p>
             </div>
           </div>
         </div>
@@ -141,14 +216,24 @@ export default function SideNavbar(props) {
         </button>
         {/* Demo content */}
         <h2 className="display-4 text-white">List</h2>
-
+        
+        <select
+          className="custom-select col-md-3 "
+          id="priority"
+          required
+         
+          onChange={sortList}
+        > <option value="Sort" disabled>Sort....</option>
+          <option value="High">High to Low</option>
+          <option value="Low">Low to High</option>
+        </select>
         {state.showForm && (
           <BackModal>
             <AddToList closeForm={closeForm} addToList={addToList} />
           </BackModal>
         )}
 
-        <TodoList todoList={list} />
+        <TodoList todoList={list} deletePost={deletePost} />
       </div>
     </>
   );

@@ -1,6 +1,12 @@
 import React from "react";
 import "./MainNavbar.css";
+import { UserAuth } from "../../context/AuthContext";
+
 export default function MainNavbar() {
+  const { logout } = UserAuth();
+  function logOut() {
+    logout();
+  }
   return (
     <header className="main-header">
       <div className="container">
@@ -31,11 +37,14 @@ export default function MainNavbar() {
               <li>
                 <a href="#about">about us</a>
               </li>
-              <li>
-                <a href="#service">services</a>
-              </li>
+
               <li>
                 <a href="#contact">contact</a>
+              </li>
+              <li>
+                <a href="/" onClick={logOut}>
+                  Logout
+                </a>
               </li>
             </ul>
           </div>
