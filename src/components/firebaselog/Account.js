@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { UserAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import MainNavbar from "../navbar/MainNavbar";
 import SideNavbar from "../navbar/SideNavbar";
+import Cart from "../cart/Cart";
 
 export default function Account() {
   const { user, logout } = UserAuth();
@@ -17,10 +18,16 @@ export default function Account() {
   //   }
   // };
 
+  const [itemList,setItemList]= useState([])
+const addToCart=(item)=>{
+setItemList(item)
+}
+
   return (
     <div>
       <MainNavbar />
-      <SideNavbar />
+      <SideNavbar addToCart={addToCart} />
+      <Cart itemsList={itemList}/>
     </div>
   );
 }

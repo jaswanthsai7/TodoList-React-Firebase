@@ -5,6 +5,8 @@ import AddToList from "../todolist/AddToList";
 import BackModal from "../modal/BackModal";
 import TodoList from "../todolist/TodoList";
 import { UserAuth } from "../../context/AuthContext";
+import ItemsList from "../Item/ItemsList";
+import Cart from "../cart/Cart";
 const handler = (state, action) => {
   if (action.type == "ADD_TODO") {
     return { showForm: !state.showForm };
@@ -110,10 +112,10 @@ export default function SideNavbar(props) {
   }
 
   const changeService = () => {
-    if(service===false){
-      setService(true)
-    }else if(service===true){
-      setService(false)
+    if (service === false) {
+      setService(true);
+    } else if (service === true) {
+      setService(false);
     }
   };
 
@@ -125,6 +127,10 @@ export default function SideNavbar(props) {
       });
     });
   }
+
+  const addToCart = (item) => {
+    props.addToCart(item);
+  };
 
   return (
     <>
@@ -166,12 +172,12 @@ export default function SideNavbar(props) {
               Services
             </a>
           </li>
-          {/* <li className="nav-item">
+          <li className="nav-item">
             <a href="#" className="nav-link text-dark font-italic">
               <i className="fa fa-picture-o mr-3 text-primary fa-fw" />
-              Gallery
+              Cart
             </a>
-          </li> */}
+          </li>
         </ul>
         <p className="text-gray font-weight-bold text-uppercase px-3 small py-4 mb-0">
           Charts
@@ -219,7 +225,8 @@ export default function SideNavbar(props) {
           <small className="text-uppercase font-weight-bold">Toggle</small>
         </button>
         {/* Demo content */}
-        {service && <div>lorem ipsum</div>}
+        {service && <ItemsList addToCart={addToCart} />}
+
         {!service && (
           <>
             <h2 className="display-4 text-white">List</h2>
