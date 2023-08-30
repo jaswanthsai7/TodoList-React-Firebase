@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import MainNavbar from "../navbar/MainNavbar";
 import SideNavbar from "../navbar/SideNavbar";
 import Cart from "../cart/Cart";
+import CartData from "../../context/cart-data-context";
+import CartDataProvider from "../../context/cart-data-context";
 
 export default function Account() {
   const { user, logout } = UserAuth();
@@ -18,16 +20,18 @@ export default function Account() {
   //   }
   // };
 
-  const [itemList,setItemList]= useState([])
-const addToCart=(item)=>{
-setItemList(item)
-}
+  const [itemList, setItemList] = useState([]);
+  // const addToCart = (item) => {
+  //   setItemList(item);
+  // };
 
   return (
     <div>
       <MainNavbar />
-      <SideNavbar addToCart={addToCart} />
-      <Cart itemsList={itemList}/>
+      
+        <SideNavbar  />
+        <Cart  />
+      
     </div>
   );
 }

@@ -5,8 +5,8 @@ export default function CartItem(props) {
 
 //   console.log(props.item)
   return (
-  <div key={props.item.id}>{props.item.name}</div>
-
+    
+  <div key={props.items.id}>{props.items.name}</div>
   );
 }
   // <li className={classes["cart-item"]}>

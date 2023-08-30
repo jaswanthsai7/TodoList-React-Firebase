@@ -8,11 +8,16 @@ import ProtectedRoutes from "./components/firebaselog/ProtectedRoutes";
 import Login from "./components/firebaselog/Login";
 import Register from "./components/firebaselog/Register";
 import AuthContext from "./context/AuthContext";
+import CartDataProvider from "./context/cart-data-context";
 
 function App() {
   return (
+
+
     <>
+    <CartDataProvider>
       <AuthContext>
+     
         <Router>
           <Routes>
             <Route path="/" element={<Login />} />
@@ -21,14 +26,14 @@ function App() {
               path="/account"
               element={
                 <ProtectedRoutes>
-                  <Account/>
+                   <Account/>
                 </ProtectedRoutes>
               }
             />
           </Routes>
         </Router>
         </AuthContext>
-    </>
+    </CartDataProvider></>
   );
 }
 

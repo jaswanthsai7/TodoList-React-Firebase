@@ -128,9 +128,9 @@ export default function SideNavbar(props) {
     });
   }
 
-  const addToCart = (item) => {
-    props.addToCart(item);
-  };
+  // const addToCarts = (item) => {
+  //   props.addToCartss(item)
+  // };
 
   return (
     <>
@@ -225,8 +225,8 @@ export default function SideNavbar(props) {
           <small className="text-uppercase font-weight-bold">Toggle</small>
         </button>
         {/* Demo content */}
-        {service && <ItemsList addToCart={addToCart} />}
 
+        {service && <ItemsList />}
         {!service && (
           <>
             <h2 className="display-4 text-white">List</h2>
@@ -248,7 +248,6 @@ export default function SideNavbar(props) {
                 <AddToList closeForm={closeForm} addToList={addToList} />
               </BackModal>
             )}
-
             <TodoList todoList={list} deletePost={deletePost} />
           </>
         )}
