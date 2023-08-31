@@ -30,7 +30,6 @@ export default function Account() {
       <MainNavbar />
       
         <SideNavbar  />
-        <Cart  />
       
     </div>
   );

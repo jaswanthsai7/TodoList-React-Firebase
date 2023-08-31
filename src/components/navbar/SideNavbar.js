@@ -8,22 +8,37 @@ import { UserAuth } from "../../context/AuthContext";
 import ItemsList from "../Item/ItemsList";
 import Cart from "../cart/Cart";
 const handler = (state, action) => {
-  if (action.type == "ADD_TODO") {
+  if (action.type === "ADD_TODO") {
     return { showForm: !state.showForm };
+  }
+  if (action.type === "SHOW_CART") {
+    return { showCart: !state.showCart };
+  }
+  if (action.type === "SHOW_SERVICE") {
+    return { showService: !state.showService };
   }
 };
 
 export default function SideNavbar(props) {
   const { user } = UserAuth();
-  const [state, dispatch] = useReducer(handler, { showForm: false });
+  const [state, dispatch] = useReducer(handler, {
+    showForm: false,
+    showCart: false,
+    showService: false,
+  });
   const [list, setList] = useState([]);
   const [service, setService] = useState(false);
-
+  const [form, setForm] = useState(false);
   const enco = user.email;
   const withoutDotCom = enco.replace(/\.com$/, "");
 
   function closeForm() {
-    dispatch({ type: "ADD_TODO" });
+    // dispatch({ type: "ADD_TODO" });
+    if (form == false) {
+      setForm(true);
+    } else if (form == true) {
+      setForm(false);
+    }
   }
 
   async function addToList(data) {
@@ -112,13 +127,17 @@ export default function SideNavbar(props) {
   }
 
   const changeService = () => {
-    if (service === false) {
-      setService(true);
-    } else if (service === true) {
-      setService(false);
-    }
+    // if (service === false) {
+    //   setService(false);
+    // } else if (service === true) {
+    //   setService(false);
+    // }
+    dispatch({ type: "SHOW_SERVICE" });
   };
 
+  const showCart = () => {
+    dispatch({ type: "SHOW_CART" });
+  };
   function clickHandler() {
     $(function () {
       // Sidebar toggle behavior
@@ -172,7 +191,7 @@ export default function SideNavbar(props) {
               Services
             </a>
           </li>
-          <li className="nav-item">
+          <li className="nav-item" onClick={showCart}>
             <a href="#" className="nav-link text-dark font-italic">
               <i className="fa fa-picture-o mr-3 text-primary fa-fw" />
               Cart
@@ -226,8 +245,8 @@ export default function SideNavbar(props) {
         </button>
         {/* Demo content */}
 
-        {service && <ItemsList />}
-        {!service && (
+        {state.showService && !service && <ItemsList />}
+        {!service && !state.showCart && !state.showService && (
           <>
             <h2 className="display-4 text-white">List</h2>
 
@@ -243,14 +262,16 @@ export default function SideNavbar(props) {
               <option value="High">High to Low</option>
               <option value="Low">Low to High</option>
             </select>
-            {state.showForm && (
-              <BackModal>
-                <AddToList closeForm={closeForm} addToList={addToList} />
-              </BackModal>
-            )}
+
             <TodoList todoList={list} deletePost={deletePost} />
           </>
         )}
+        {form && (
+          <BackModal>
+            <AddToList closeForm={closeForm} addToList={addToList} />
+          </BackModal>
+        )}
+        {state.showCart && <Cart hideCart={showCart} />}
       </div>
     </>
   );
