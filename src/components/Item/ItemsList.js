@@ -53,9 +53,9 @@ export default function ItemsList(props) {
     setItemLists((prev) => {
       console.log(prev);
       console.log(items);
-      return [...usess.items, items];
+      return [...prev, items];
     });
-    usess.addItems(itemLists);
+    usess.addItems([...itemLists,items]);
     // setItemLists(dummyItem);
     // usess.addItems(dummyItem);
     // props.addToCart(itemLists);
