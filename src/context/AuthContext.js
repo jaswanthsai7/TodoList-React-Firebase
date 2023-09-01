@@ -9,7 +9,6 @@ import {
 import React from "react";
 import { auth } from "../Firebase";
 
-
 const UserContext = createContext();
 
 export default function AuthContext({ children }) {

@@ -7,6 +7,9 @@ import TodoList from "../todolist/TodoList";
 import { UserAuth } from "../../context/AuthContext";
 import ItemsList from "../Item/ItemsList";
 import Cart from "../cart/Cart";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const handler = (state, action) => {
   if (action.type === "ADD_TODO") {
     return { showForm: !state.showForm };
@@ -137,6 +140,21 @@ export default function SideNavbar(props) {
   const showCart = () => {
     dispatch({ type: "SHOW_CART" });
   };
+
+  let content = "";
+  const addedToast = () => {
+    content = (
+      <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-body">Hello, world! This is a toast message.</div>
+      </div>
+    );
+
+    const timer = setTimeout(() => {
+      content = "";
+    }, 2000);
+    clearTimeout(timer);
+  };
+
   function clickHandler() {
     $(function () {
       // Sidebar toggle behavior
@@ -245,6 +263,7 @@ export default function SideNavbar(props) {
         {/* Demo content */}
 
         {state.showService && <ItemsList />}
+        <ToastContainer />
         {!state.showCart && !state.showService && (
           <>
             <h2 className="display-4 text-white">List</h2>

@@ -3,7 +3,7 @@
     margin: 0;
     padding: 0;
     min-height: 20rem;
-    
+
     /* overflow: scroll; */
 }
 
@@ -45,7 +45,8 @@
     background-color: #8a2b06;
     color: white;
 }
-.div{
+
+.div {
     margin: 6px 6px 6px 6px;
     padding: 15px;
 }

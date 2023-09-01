@@ -12,28 +12,26 @@ import CartDataProvider from "./context/cart-data-context";
 
 function App() {
   return (
-
-
     <>
-    <CartDataProvider>
-      <AuthContext>
-     
-        <Router>
-          <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/signup" element={<Register/>} />
-            <Route
-              path="/account"
-              element={
-                <ProtectedRoutes>
-                   <Account/>
-                </ProtectedRoutes>
-              }
-            />
-          </Routes>
-        </Router>
+      <CartDataProvider>
+        <AuthContext>
+          <Router>
+            <Routes>
+              <Route path="/" element={<Login />} />
+              <Route path="/signup" element={<Register />} />
+              <Route
+                path="/account"
+                element={
+                  <ProtectedRoutes>
+                    <Account />
+                  </ProtectedRoutes>
+                }
+              />
+            </Routes>
+          </Router>
         </AuthContext>
-    </CartDataProvider></>
+      </CartDataProvider>
+    </>
   );
 }
 

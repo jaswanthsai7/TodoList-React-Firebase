@@ -10,7 +10,7 @@ export default function MainNavbar() {
     await logout();
     navigate("/");
   };
-  
+
   return (
     <header className="main-header">
       <div className="container">

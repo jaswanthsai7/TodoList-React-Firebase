@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import CartDatas from "../../context/cart-con";
-
+import $ from "jquery";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const DUMMY_MEALS = [
   {
     id: "m1",
@@ -65,6 +67,22 @@ export default function ItemsList(props) {
     // usess.addItems(dummyItem);
     // props.addToCart(itemLists);
     // console.log(usess.items);
+  };
+
+  let content = "";
+  const addedToast = () => {
+    const itemm = usess.items;
+    const last = itemm[itemm.length - 1];
+
+    toast.success(`${last.name} Added to Cart`, {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 2000,
+    });
+
+    // const timer = setTimeout(() => {
+    //   content = $
+    // }, 2000);
+    // clearTimeout(timer);
   };
 
   // useEffect(()=>{
@@ -140,6 +158,7 @@ export default function ItemsList(props) {
                         className="btn btn-warning mt-4 text-white"
                         onClick={() => {
                           addToCart(item);
+                          addedToast();
                         }}
                       >
                         <i className="icon-cart-add mr-2" /> Add to cart
