@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../../context/AuthContext";
 import classes from "./Login.module.css";
 
@@ -55,6 +55,12 @@ export default function Login() {
               setPassword(e.target.value);
             }}
           />
+        </p>
+        <p>
+          Don't have an account ? then{" "}
+          <Link to="/signup" className="underline">
+            signup
+          </Link>
         </p>
         <p className={classes.actions}>
           <button type="submit" className=" btn btn-primary bg-primary">

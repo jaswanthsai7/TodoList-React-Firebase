@@ -105,9 +105,15 @@ export default function SideNavbar(props) {
         // setList((prev) => {
         //   return [prev, ...data];
         // });
-        const dataLoad = Object.keys(data).map((key) => {
-          return { id: key, ...data[key] };
-        });
+        if (data !== null) {
+          const dataLoad = Object.keys(data).map((key) => {
+            return { id: key, ...data[key] };
+          });
+          setList(dataLoad);
+        } else {
+          setList([]);
+          console.log(list)
+        }
         // for (const key in data) {
         //   dataLoad.push({
         //     author: data[key].author,
@@ -116,7 +122,7 @@ export default function SideNavbar(props) {
         //     priority: data[key].priority,
         //   });
         // }
-        setList(dataLoad);
+        // setList(dataLoad)
       });
   };
 
@@ -141,19 +147,18 @@ export default function SideNavbar(props) {
     dispatch({ type: "SHOW_CART" });
   };
 
-  let content = "";
-  const addedToast = () => {
-    content = (
-      <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-body">Hello, world! This is a toast message.</div>
-      </div>
-    );
+  // const addedToast = () => {
+  //   content = (
+  //     <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+  //       <div class="toast-body">Hello, world! This is a toast message.</div>
+  //     </div>
+  //   );
 
-    const timer = setTimeout(() => {
-      content = "";
-    }, 2000);
-    clearTimeout(timer);
-  };
+  //   const timer = setTimeout(() => {
+  //     content = "";
+  //   }, 2000);
+  //   clearTimeout(timer);
+  // };
 
   function clickHandler() {
     $(function () {
@@ -273,14 +278,18 @@ export default function SideNavbar(props) {
               required
               onChange={sortList}
             >
-              <option value="Sort" disabled>
+              <option value="Sort" selected>
                 Sort....
               </option>
               <option value="High">High to Low</option>
               <option value="Low">Low to High</option>
             </select>
 
-            <TodoList todoList={list} deletePost={deletePost} />
+            {list !== [] ? (
+              <TodoList todoList={list} deletePost={deletePost} />
+            ) : (
+              <p>No Data Found....</p>
+            )}
           </>
         )}
         {form && (

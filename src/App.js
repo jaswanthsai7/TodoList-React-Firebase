@@ -1,8 +1,5 @@
 import "./App.css";
-import MainNavbar from "./components/navbar/MainNavbar";
-import SideNavbar from "./components/navbar/SideNavbar";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-
 import Account from "./components/firebaselog/Account";
 import ProtectedRoutes from "./components/firebaselog/ProtectedRoutes";
 import Login from "./components/firebaselog/Login";

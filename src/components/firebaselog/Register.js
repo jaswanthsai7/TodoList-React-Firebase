@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { UserAuth } from "../../context/AuthContext";
+import classes from "./Register.module.css";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -8,28 +9,28 @@ export default function Register() {
   const [error, setError] = useState("");
 
   const { createUser } = UserAuth();
-
+  const nav = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    const success=''
     try {
-      await createUser(email, password);
+     success=await createUser(email, password);
+     console.log(success)
     } catch (error) {
       setError(error.message);
+    }
+    if (error!=="") {
+      console.log(error)
+    } else if(!success==='') {
+      nav("/");
     }
   };
 
   return (
-    <div>
-      <p>
-        Already have an account ? then{" "}
-        <Link to="/" className="underline">
-          signin
-        </Link>
-      </p>
-
+    <div className={classes.form}>
       <form onSubmit={handleSubmit}>
-        <div className="col-sm-2">
+        <p>
           <label htmlFor="exampleInputEmail1" className="form-label">
             Email address
           </label>
@@ -42,11 +43,11 @@ export default function Register() {
             }}
             aria-describedby="emailHelp"
           />
-          <div id="emailHelp" className="form-text">
-            We'll never share your email with anyone else.
-          </div>
-        </div>
-        <div className="col-sm-2">
+          {/* <div id="emailHelp" className="form-text">
+              We'll never share your email with anyone else.
+            </div> */}
+        </p>
+        <p>
           <label htmlFor="exampleInputPassword1" className="form-label">
             Password
           </label>
@@ -58,22 +59,19 @@ export default function Register() {
               setPassword(e.target.value);
             }}
           />
-        </div>
-        <div className="col-sm-2 form-check">
-          <input
-            type="checkbox"
-            className="form-check-input"
-            id="exampleCheck1"
-          />
-          <label className="form-check-label" htmlFor="exampleCheck1">
-            Check me out
-          </label>
-        </div>
-        <div className="col-sm-2">
-          <button type="submit" className=" btn btn-primary bg-primary">
-            Signup
+        </p>
+        <p>
+          Already have an account ? then{" "}
+          <Link to="/" className="underline">
+            signin
+          </Link>
+        </p>
+
+        <p className={classes.actions}>
+          <button type="submit" className="btn btn-primary bg-primary">
+            SignUp
           </button>
-        </div>
+        </p>
       </form>
     </div>
   );

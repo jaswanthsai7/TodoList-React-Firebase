@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import CartDatas from "../../context/cart-con";
-import $ from "jquery";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const DUMMY_MEALS = [
@@ -69,7 +68,7 @@ export default function ItemsList(props) {
     // console.log(usess.items);
   };
 
-  let content = "";
+  // let content = "";
   const addedToast = () => {
     const itemm = usess.items;
     const last = itemm[itemm.length - 1];
