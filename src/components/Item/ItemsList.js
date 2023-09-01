@@ -1,6 +1,4 @@
-import React, { Fragment, useContext, useEffect, useState } from "react";
-import Cart from "../cart/Cart";
-import CartData from "../../context/cart-data-context";
+import React, { useContext } from "react";
 import CartDatas from "../../context/cart-con";
 
 const DUMMY_MEALS = [
@@ -35,11 +33,10 @@ const DUMMY_MEALS = [
 ];
 
 export default function ItemsList(props) {
-  const [itemLists, setItemLists] = useState([]);
+  // const [itemLists, setItemLists] = useState([]);
   //   const [dummyItem, setDummyItem] = useState([]);
 
   const usess = useContext(CartDatas);
-  console.log(usess);
 
   const addToCart = (items) => {
     console.log("Add To cart");
@@ -50,12 +47,20 @@ export default function ItemsList(props) {
     //   description: items.description,
     //   price: items.price,
     // });
-    setItemLists((prev) => {
-      console.log(prev);
-      console.log(items);
-      return [...prev, items];
+    // setItemLists((prev) => {
+    //   console.log(prev);
+    //   console.log(items);
+    //   return [...prev, items];
+    // });
+
+    usess.addItem({
+      id: items.id,
+      name: items.name,
+      amount: 1,
+      description: items.description,
+      price: items.price,
     });
-    usess.addItems([...itemLists,items]);
+    // usess.addItems([...itemLists,items]);
     // setItemLists(dummyItem);
     // usess.addItems(dummyItem);
     // props.addToCart(itemLists);

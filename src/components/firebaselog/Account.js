@@ -1,16 +1,8 @@
-import React, { useState } from "react";
-import { UserAuth } from "../../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import React from "react";
 import MainNavbar from "../navbar/MainNavbar";
 import SideNavbar from "../navbar/SideNavbar";
-import Cart from "../cart/Cart";
-import CartData from "../../context/cart-data-context";
-import CartDataProvider from "../../context/cart-data-context";
 
 export default function Account() {
-  const { user, logout } = UserAuth();
-  const navigate = useNavigate();
-
   // const logOutHandler = async () => {
   //   try {
   //     await logout();
@@ -20,7 +12,6 @@ export default function Account() {
   //   }
   // };
 
-  const [itemList, setItemList] = useState([]);
   // const addToCart = (item) => {
   //   setItemList(item);
   // };
@@ -28,9 +19,7 @@ export default function Account() {
   return (
     <div>
       <MainNavbar />
-      
-        <SideNavbar  />
-      
+      <SideNavbar />
     </div>
   );
 }

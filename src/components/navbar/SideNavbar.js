@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useReducer, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import "./SideNavbar.css";
-import $, { data, error } from "jquery";
+import $ from "jquery";
 import AddToList from "../todolist/AddToList";
 import BackModal from "../modal/BackModal";
 import TodoList from "../todolist/TodoList";
@@ -27,16 +27,16 @@ export default function SideNavbar(props) {
     showService: false,
   });
   const [list, setList] = useState([]);
-  const [service, setService] = useState(false);
+  // const [service, setService] = useState(false);
   const [form, setForm] = useState(false);
   const enco = user.email;
   const withoutDotCom = enco.replace(/\.com$/, "");
 
   function closeForm() {
     // dispatch({ type: "ADD_TODO" });
-    if (form == false) {
+    if (form === false) {
       setForm(true);
-    } else if (form == true) {
+    } else if (form === true) {
       setForm(false);
     }
   }
@@ -61,7 +61,6 @@ export default function SideNavbar(props) {
 
   useEffect(() => {
     initialLoad();
-    console.log(1);
   }, []);
 
   const sortList = (event) => {
@@ -94,7 +93,7 @@ export default function SideNavbar(props) {
     }
   };
 
-  const initialLoad = useCallback(() => {
+  const initialLoad = () => {
     fetch(
       `https://todolist-auth-39f0d-default-rtdb.firebaseio.com/${withoutDotCom}.json`
     )
@@ -116,7 +115,7 @@ export default function SideNavbar(props) {
         // }
         setList(dataLoad);
       });
-  });
+  };
 
   async function deletePost(id) {
     await fetch(
@@ -245,11 +244,10 @@ export default function SideNavbar(props) {
         </button>
         {/* Demo content */}
 
-        {state.showService && !service && <ItemsList />}
-        {!service && !state.showCart && !state.showService && (
+        {state.showService && <ItemsList />}
+        {!state.showCart && !state.showService && (
           <>
             <h2 className="display-4 text-white">List</h2>
-
             <select
               className="custom-select col-md-3 "
               id="priority"
