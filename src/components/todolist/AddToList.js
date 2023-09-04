@@ -28,7 +28,7 @@ export default function AddToList(props) {
     };
     console.log(data);
     props.addToList(data);
-  };
+    closeForm()  };
 
   const closeForm = () => {
     props.closeForm();

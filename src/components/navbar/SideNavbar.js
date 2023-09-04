@@ -32,8 +32,13 @@ export default function SideNavbar(props) {
   const [list, setList] = useState([]);
   // const [service, setService] = useState(false);
   const [form, setForm] = useState(false);
+  const [deletedId, setDeletedId] = useState(null);
   const enco = user.email;
   const withoutDotCom = enco.replace(/\.com$/, "");
+
+  useEffect(() => {
+    initialLoad();
+  }, [deletedId]);
 
   function closeForm() {
     // dispatch({ type: "ADD_TODO" });
@@ -55,16 +60,12 @@ export default function SideNavbar(props) {
         },
       }
     ).catch((error) => console.log(error));
-
-    setList((prev) => {
-      return [...prev, data];
-    });
+    initialLoad();
+    // setList((prev) => {
+    //   return [...prev, data];
+    // });
     dispatch({ type: "ADD_TODO" });
   }
-
-  useEffect(() => {
-    initialLoad();
-  }, []);
 
   const sortList = (event) => {
     if (event.target.value === "High") {
@@ -96,43 +97,46 @@ export default function SideNavbar(props) {
     }
   };
 
-  const initialLoad = () => {
-    fetch(
-      `https://todolist-auth-39f0d-default-rtdb.firebaseio.com/${withoutDotCom}.json`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        // setList((prev) => {
-        //   return [prev, ...data];
-        // });
-        if (data !== null) {
-          const dataLoad = Object.keys(data).map((key) => {
-            return { id: key, ...data[key] };
-          });
-          setList(dataLoad);
-        } else {
-          setList([]);
-          console.log(list)
-        }
-        // for (const key in data) {
-        //   dataLoad.push({
-        //     author: data[key].author,
-        //     date: data[key].date,
-        //     text: data[key].text,
-        //     priority: data[key].priority,
-        //   });
-        // }
-        // setList(dataLoad)
-      });
+  const initialLoad = async () => {
+    try {
+      const response = await fetch(
+        `https://todolist-auth-39f0d-default-rtdb.firebaseio.com/${withoutDotCom}.json`
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+      const data = await response.json();
+      if (data !== null) {
+        const dataLoad = Object.keys(data).map((key) => {
+          return { id: key, ...data[key] };
+        });
+        setList(dataLoad);
+      } else {
+        setList([]);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
-
-  async function deletePost(id) {
-    await fetch(
-      `https://todolist-auth-39f0d-default-rtdb.firebaseio.com/${withoutDotCom}/${id}.json`,
-      { method: "DELETE" }
-    ).catch((error) => console.log(error));
-    initialLoad();
-  }
+  const deletePost = async (id) => {
+    try {
+      await fetch(
+        `https://todolist-auth-39f0d-default-rtdb.firebaseio.com/${withoutDotCom}/${id}.json`,
+        { method: "DELETE" }
+      );
+      console.log("in del post");
+      console.log(id);
+      // initialLoad();
+      setDeletedId(id);
+      // Use the callback function of setState to ensure immediate refresh
+      // setList((prevList) => {
+      //   const updatedList = prevList.filter((post) => post.id !== id);
+      //   return updatedList;
+      // });
+    } catch (error) {
+      console.error("Error deleting post:", error);
+    }
+  };
 
   const changeService = () => {
     // if (service === false) {
@@ -278,7 +282,7 @@ export default function SideNavbar(props) {
               required
               onChange={sortList}
             >
-              <option value="Sort" selected>
+              <option value="Sort" disabled>
                 Sort....
               </option>
               <option value="High">High to Low</option>

@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import CartDatas from "../../context/cart-con";
 import { toast } from "react-toastify";
+import $ from 'jquery'
 import "react-toastify/dist/ReactToastify.css";
 const DUMMY_MEALS = [
   {
@@ -73,7 +74,7 @@ export default function ItemsList(props) {
     const itemm = usess.items;
     const last = itemm[itemm.length - 1];
 
-    toast.success(`${last.name} Added to Cart`, {
+    toast.success(` Added to Cart`, {
       position: toast.POSITION.TOP_CENTER,
       autoClose: 2000,
     });

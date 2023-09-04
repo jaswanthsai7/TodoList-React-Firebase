@@ -1,6 +1,12 @@
 import React from "react";
 
 export default function TodoList(props) {
+
+
+const deleThePost=(deleteId)=>{
+props.deletePost(deleteId)
+}
+
   return (
     <div className="row">
       {props.todoList.map((post, i) => (
@@ -60,10 +66,7 @@ export default function TodoList(props) {
 
                 <button
                   className="btn btn-danger p-1 mt-2"
-                  onClick={() => {
-                    const id = post.id;
-                    props.deletePost(id);
-                  }}
+                  onClick={()=>deleThePost(post.id)}
                 >
                   Delete
                 </button>
