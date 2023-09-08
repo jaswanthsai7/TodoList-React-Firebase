@@ -289,7 +289,7 @@ export default function SideNavbar(props) {
               <option value="Low">Low to High</option>
             </select>
 
-            {list !== [] ? (
+            {list != [] ? (
               <TodoList todoList={list} deletePost={deletePost} />
             ) : (
               <p>No Data Found....</p>
